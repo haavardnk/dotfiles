@@ -6,7 +6,7 @@ config.font_size = 19
 config.window_decorations = "RESIZE"
 config.window_close_confirmation = "AlwaysPrompt"
 config.scrollback_lines = 3000
-config.color_scheme = "Tokyo Night"
+config.color_scheme = "Catppuccin Frappe"
 
 config.use_fancy_tab_bar = false
 config.status_update_interval = 1000
