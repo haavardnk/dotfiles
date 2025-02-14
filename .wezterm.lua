@@ -2,12 +2,12 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- Set the font and font size
-config.font = wezterm.font("MesloLGS Nerd Font Mono")
+config.font = wezterm.font("JetbrainsMono Nerd Font")
 config.font_size = 19
 
 -- Window appearance and behavior settings
 config.window_decorations = "RESIZE"
-config.window_close_confirmation = "AlwaysPrompt"
+config.window_close_confirmation = 'NeverPrompt'
 config.scrollback_lines = 3000
 config.color_scheme = "Catppuccin Frappe"
 
