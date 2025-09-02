@@ -1,5 +1,7 @@
-.vscode/launch.json
-.vscode/settings.json
+.vscode/*
+.zed/*
 *.code-workspace
 .env
 .DS_Store
+**/nuget.config
+pyrightconfig.json
