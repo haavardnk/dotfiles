@@ -42,10 +42,10 @@
     background: #343a51 !important;
     left: auto !important;
     border-radius: 3px;
-    /* &:hover{
+    &:hover{
         background: #98a1ff !important;
         box-shadow: 0 0 15px #6c84eed0;
-    } */
+    }
 }
 
 .scrollbar.horizontal .slider {
@@ -62,13 +62,23 @@
 }
 
 /* hide scrollbar marks  */
-.decorationsOverviewRuler {
+/* .decorationsOverviewRuler {
     display: none !important;
-}
+} */
 
 .codicon-toolbar-more,
 .codicon-word-wrap {
-    display: block !important;
+    /* Hide the top-right "..." (More Actions) button */
+    display: none !important;
+}
+
+/* Hide/collapse editor actions area (top-right reserved area) */
+.editor-actions {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    overflow: hidden !important;
 }
 
 /* central command palette */
@@ -102,4 +112,120 @@
     overflow: visible;
     filter: none;
     transform: scale(1.5, 1.5);
+}
+
+/* Root workbench variables */
+.monaco-workbench {
+    --titlebar-height: 37px;
+}
+
+/* Sidebar composite title height + children */
+.monaco-workbench .part.sidebar.left .composite.title,
+.monaco-workbench .part.sidebar.left .composite.title .title-actions,
+.monaco-workbench .part.sidebar.left .composite.title .global-actions,
+.monaco-workbench .part.sidebar.left .composite.title .monaco-toolbar {
+    height: var(--titlebar-height);
+}
+.monaco-workbench .part.sidebar.left .composite.title .title-label {
+    line-height: var(--titlebar-height);
+}
+
+/* Tabs title area variable */
+.monaco-workbench .title.tabs {
+    --editor-group-tab-height: var(--titlebar-height) !important;
+}
+
+/* Split view adjustments when activity bar is present */
+.monaco-workbench .split-view-view:has(> .part.activitybar.left),
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) .part.activitybar.left,
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) .content {
+    min-width: var(--activitybar-width);
+}
+
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) + .split-view-view.visible,
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) + .split-view-view:not(.visible) + .split-view-view.visible {
+    --offset: calc(var(--activitybar-width) - 48px);
+    margin-left: var(--offset);
+}
+
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) + .split-view-view.visible > *:first-child,
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) + .split-view-view:not(.visible) + .split-view-view.visible > *:first-child {
+    width: auto;
+    margin-right: var(--offset);
+}
+
+/* Deep editor width reset */
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) + .split-view-view.visible > *:first-child .content .split-view-view .monaco-editor .overflow-guard,
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) + .split-view-view.visible > *:first-child .content .split-view-view .monaco-editor .overlayWidgets,
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) + .split-view-view.visible > *:first-child .content .split-view-view .monaco-editor .overflow-guard .monaco-scrollable-element,
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) + .split-view-view.visible > *:first-child .content .split-view-view .monaco-editor .overlayWidgets .monaco-scrollable-element,
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) + .split-view-view.visible > *:first-child .content .split-view-view .monaco-editor .overflow-guard .sticky-widget,
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) + .split-view-view.visible > *:first-child .content .split-view-view .monaco-editor .overlayWidgets .sticky-widget {
+    width: unset !important;
+    left: 0;
+    right: 0;
+}
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) + .split-view-view.visible > *:first-child .content .split-view-view .monaco-editor .overlayWidgets .sticky-widget,
+.monaco-workbench .split-view-view:has(> .part.activitybar.left) + .split-view-view.visible > *:first-child .content .split-view-view .monaco-editor .overflow-guard .sticky-widget {
+    right: 14px !important;
+}
+
+/* Sash alignment */
+.monaco-workbench .monaco-sash.vertical.minimum {
+    left: calc(var(--activitybar-width) - var(--vscode-sash-size) / 2) !important;
+}
+
+/* Activity bar action label width */
+.monaco-workbench .part.activitybar.left .monaco-action-bar .action-label {
+    width: var(--activitybar-width);
+}
+
+/* Non-fullscreen layout adjustments */
+.monaco-workbench:not(.fullscreen) .part.activitybar.left > .content {
+    padding-top: var(--titlebar-height);
+}
+
+.monaco-workbench:not(.fullscreen):has(.sidebar.right) .monaco-split-view2.horizontal .split-view-view:not(.visible) + .split-view-view.visible .editor .title .tabs-and-actions-container {
+    padding-left: var(--activitybar-width);
+}
+.monaco-workbench:not(.fullscreen):has(.sidebar.right) .auxiliarybar.left .composite.title {
+    padding-left: var(--activitybar-width);
+}
+
+/* Drag regions */
+.monaco-workbench:not(.fullscreen) .activitybar,
+.monaco-workbench:not(.fullscreen) .statusbar,
+.monaco-workbench:not(.fullscreen) .tabs-container,
+.monaco-workbench:not(.fullscreen) .part.editor .title .tabs-container,
+.monaco-workbench:not(.fullscreen) .activitybar,
+.monaco-workbench:not(.fullscreen) .statusbar,
+.monaco-workbench:not(.fullscreen) .sidebar .composite.title {
+    /* Keep draggable only for main title/editor area */
+    -webkit-app-region: drag;
+}
+.monaco-workbench:not(.fullscreen) .activitybar .content .monaco-action-bar,
+.monaco-workbench:not(.fullscreen) .statusbar .statusbar-item,
+.monaco-workbench:not(.fullscreen) .tabs-container .tab,
+.monaco-workbench:not(.fullscreen) .sidebar .composite.title .title-actions .action-label,
+/* Make sure panel (terminal) tabs are interactive and not draggable */
+.monaco-workbench:not(.fullscreen) .part.panel .tabs-container,
+.monaco-workbench:not(.fullscreen) .part.panel .tabs-container .tab {
+    -webkit-app-region: no-drag !important;
+}
+
+/* Status bar refinements */
+.monaco-workbench .statusbar > .items-container > .statusbar-item.left.first-visible-item {
+    padding-left: 0;
+}
+
+/* Margin line numbers */
+.editor .margin-view-overlays .line-numbers {
+    font-size: 85%;
+}
+
+/* Search / find font family override */
+.search-widget textarea,
+.find-widget textarea,
+.search-view .results .match {
+    font-family: var(--cus-monospace-font) !important;
 }
