@@ -7,9 +7,15 @@ config.font_size = 19
 
 -- Window appearance and behavior settings
 config.window_decorations = "RESIZE"
-config.window_close_confirmation = 'NeverPrompt'
+config.window_close_confirmation = "NeverPrompt"
 config.scrollback_lines = 3000
-config.color_scheme = "Catppuccin Frappe"
+config.color_scheme = "Catppuccin Mocha"
+config.window_padding = {
+	left = 10,
+	right = 10,
+	top = 0,
+	bottom = 0,
+}
 
 -- Tab bar settings
 config.use_fancy_tab_bar = false
