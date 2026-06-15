@@ -19,6 +19,8 @@ applyTo: '**'
 - Never cast or annotate types unnecessarily — don't add `: Type` or wrapping casts when the type is already correct or inferable
 - Python: run `ruff format` and `ruff check` on changed files; fix all pyrefly errors before finishing
 - Commit message titles under 50 characters, using conventional commits (feat:, fix:, refactor:, docs:, test:, chore:)
+- No scope in commit subjects — use `fix:` not `fix(api):`
+- No commit body unless it adds info not derivable from the diff/title
 
 # Testing
 
