@@ -7,9 +7,17 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "vertical_scroll_margin": 10.0,
+  "semantic_tokens": "full",
+  "format_on_save": "on",
+  "edit_predictions": {
+    "provider": "copilot"
+  },
   "agent": {
+    "tool_permissions": {
+      "default": "allow"
+    },
     "default_profile": "write",
-    "always_allow_tool_actions": true,
     "default_model": {
       "provider": "copilot_chat",
       "model": "claude-sonnet-4"
@@ -17,15 +25,13 @@
     "dock": "left",
     "button": false
   },
-  "features": {
-    "edit_prediction_provider": "copilot"
-  },
   "icon_theme": "Catppuccin Frappé",
   "base_keymap": "VSCode",
   "minimap": {
     "show": "never"
   },
   "terminal": {
+    "max_scroll_history_lines": 10000,
     "font_family": "JetBrainsMono Nerd Font",
     "button": false,
     "detect_venv": {
@@ -48,9 +54,9 @@
   "vim_mode": true,
   "ui_font_family": "JetBrainsMono Nerd Font",
   "ui_font_size": 16,
-  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_family": "JetbrainsMono Nerd Font",
   "buffer_font_size": 14,
-  "relative_line_numbers": true,
+  "relative_line_numbers": "enabled",
   "theme": {
     "mode": "system",
     "light": "One Light",
@@ -72,8 +78,10 @@
     "button": true
   },
   "project_panel": { "button": false, "dock": "right" },
-  "outline_panel": { "button": false },
-  "collaboration_panel": { "button": false },
+  "outline_panel": { "dock": "right",
+                     "button": false },
+  "collaboration_panel": { "dock": "right",
+                           "button": false },
   "debugger": { "button": false },
   "git_panel": { "button": false, "dock": "right" },
   "notification_panel": { "button": false },
@@ -81,14 +89,15 @@
   "search": { "button": false },
   "languages": {
     "Python": {
+      "semantic_tokens": "full",
       "language_servers": ["basedpyright", "ruff"],
       "format_on_save": "on",
       "formatter": [
         {
-          "code_actions": {
-            "source.organizeImports.ruff": true,
-            "source.fixAll.ruff": true
-          }
+          "code_action": "source.organizeImports.ruff"
+        },
+        {
+          "code_action": "source.fixAll.ruff"
         },
         {
           "language_server": {
