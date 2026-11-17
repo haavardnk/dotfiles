@@ -7,111 +7,301 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "vertical_scroll_margin": 10.0,
-  "semantic_tokens": "full",
-  "format_on_save": "on",
-  "edit_predictions": {
-    "provider": "copilot"
+  // Installed automatically on startup if missing.
+  "agent_servers": {
+    "github-copilot-cli": {
+      "default_config_options": {
+        "reasoning_effort": "high",
+        "model": "claude-opus-5.5"
+      },
+      "type": "registry"
+    }
   },
-  "agent": {
-    "tool_permissions": {
-      "default": "allow"
-    },
-    "default_profile": "write",
-    "default_model": {
-      "provider": "copilot_chat",
-      "model": "claude-sonnet-4"
-    },
-    "dock": "left",
-    "button": false
+  "auto_install_extensions": {
+    "markdownlint": true,
+    "marksman": true,
+    "svelte": true
   },
-  "icon_theme": "Catppuccin Frappé",
-  "base_keymap": "VSCode",
-  "minimap": {
-    "show": "never"
-  },
-  "terminal": {
-    "max_scroll_history_lines": 10000,
-    "font_family": "JetBrainsMono Nerd Font",
-    "button": false,
-    "detect_venv": {
-      "on": {
-        "directories": [".env", "env", ".venv", "venv"],
-        "activate_script": "default"
+  "context_servers": {
+    "mcp-server-context7": {
+      "enabled": true,
+      "remote": false,
+      "settings": {
       }
     }
   },
-  "telemetry": {
-    "diagnostics": false,
-    "metrics": false
-  },
-  "preview_tabs": {
-    "enable_preview_from_file_finder": true
-  },
-  "file_types": {
-    "yaml": ["*.setup"]
-  },
-  "vim_mode": true,
-  "ui_font_family": "JetBrainsMono Nerd Font",
-  "ui_font_size": 16,
-  "buffer_font_family": "JetbrainsMono Nerd Font",
-  "buffer_font_size": 14,
-  "relative_line_numbers": "enabled",
-  "theme": {
-    "mode": "system",
-    "light": "One Light",
-    "dark": "Catppuccin Frappé"
-  },
-  "title_bar": {
-    "show_onboarding_banner": false,
-    "show_user_picture": false,
-    "show_sign_in": false
-  },
-  "tab_bar": { "show_tab_bar_buttons": false },
   "toolbar": {
+    "breadcrumbs": false,
     "quick_actions": false
   },
-  "status_bar": {
-    "cursor_position_button": false
+  "search": {
+    "button": false
   },
-  "global_lsp_settings": {
-    "button": true
+  "diagnostics": {
+    "button": false,
+    // Error-lens style: show warnings and errors at the end of the offending line.
+    "inline": {
+      "enabled": true,
+      "max_severity": "warning"
+    }
   },
-  "project_panel": { "button": false, "dock": "right" },
-  "outline_panel": { "dock": "right",
-                     "button": false },
-  "collaboration_panel": { "dock": "right",
-                           "button": false },
-  "debugger": { "button": false },
-  "git_panel": { "button": false, "dock": "right" },
-  "notification_panel": { "button": false },
-  "diagnostics": { "button": false },
-  "search": { "button": false },
+  // Toggle at any time with `editor: toggle inlay hints`.
+  "inlay_hints": {
+    "enabled": true
+  },
   "languages": {
     "Python": {
-      "semantic_tokens": "full",
-      "language_servers": ["basedpyright", "ruff"],
+      // Pyrefly + ty for type checking / IntelliSense, Ruff for linting + formatting.
+      // All read project config from pyproject.toml ([tool.pyrefly], [tool.ty], [tool.ruff]).
+      "language_servers": ["pyrefly", "ty", "ruff", "!basedpyright", "!pyright", "!pylsp"],
       "format_on_save": "on",
-      "formatter": [
-        {
-          "code_action": "source.organizeImports.ruff"
-        },
-        {
-          "code_action": "source.fixAll.ruff"
-        },
-        {
-          "language_server": {
-            "name": "ruff"
-          }
-        }
-      ]
+      // On save / format: Ruff sorts imports first, then formats.
+      "code_actions_on_format": {
+        "source.organizeImports.ruff": true
+      },
+      "formatter": {
+        "language_server": { "name": "ruff" }
+      }
+    },
+    "Rust": {
+      // rustfmt via rust-analyzer: honours rustfmt.toml / rust-toolchain.toml and
+      // reorders imports (`reorder_imports` is on by default).
+      "format_on_save": "on",
+      "formatter": "language_server"
+    },
+    // JS/TS/Svelte: organize imports (sort + drop unused) -> eslint --fix -> Prettier.
+    // Prettier uses the project's node_modules install + config when present.
+    "TypeScript": {
+      "format_on_save": "on",
+      "formatter": "prettier",
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.fixAll.eslint": true
+      }
+    },
+    "TSX": {
+      "format_on_save": "on",
+      "formatter": "prettier",
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.fixAll.eslint": true
+      }
+    },
+    "JavaScript": {
+      "format_on_save": "on",
+      "formatter": "prettier",
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.fixAll.eslint": true
+      }
+    },
+    "Svelte": {
+      // svelte-language-server's organizeImports is template-aware, so imports used
+      // only in markup are kept. ESLint and Tailwind attach via "...".
+      "language_servers": ["svelte-language-server", "..."],
+      "format_on_save": "on",
+      "formatter": "prettier",
+      "prettier": {
+        "allowed": true,
+        "plugins": ["prettier-plugin-svelte"]
+      },
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.fixAll.eslint": true
+      }
+    },
+    "CSS": {
+      "format_on_save": "on",
+      "formatter": "prettier"
+    },
+    "Markdown": {
+      // markdownlint --fix only, using the project's .markdownlint* / .markdownlint-cli2.* rules.
+      // No Prettier: it rewrites list markers, emphasis and tables that markdownlint configs often pin.
+      "format_on_save": "on",
+      "formatter": [],
+      "code_actions_on_format": {
+        "source.fixAll": true
+      }
     }
   },
   "lsp": {
-    "omnisharp": {
-      "binary": {
-        "path": "csharp-language-server"
+    "rust-analyzer": {
+      "initialization_options": {
+        // Clippy diagnostics on save instead of plain `cargo check`.
+        "check": {
+          "command": "clippy"
+        },
+        "cargo": {
+          // Own tree in target/rust-analyzer: never contends for the build lock
+          // and never spawns a stray target/debug tree.
+          "targetDir": true
+        },
+        "imports": {
+          "granularity": {
+            "group": "module"
+          },
+          "prefix": "crate"
+        },
+        "inlayHints": {
+          "maxLength": 25,
+          "closureReturnTypeHints": {
+            "enable": "with_block"
+          },
+          "lifetimeElisionHints": {
+            "enable": "skip_trivial",
+            "useParameterNames": true
+          }
+        }
+      }
+    },
+    "vtsls": {
+      "settings": {
+        "typescript": {
+          "updateImportsOnFileMove": { "enabled": "always" }
+        },
+        "javascript": {
+          "updateImportsOnFileMove": { "enabled": "always" }
+        }
+      }
+    },
+    "svelte-language-server": {
+      "initialization_options": {
+        "configuration": {
+          "typescript": {
+            "updateImportsOnFileMove": { "enabled": "always" }
+          }
+        }
+      }
+    },
+    "eslint": {
+      "settings": {
+        // Find the nearest eslint config / package.json (e.g. a `web/` subfolder).
+        "workingDirectory": { "mode": "auto" }
+      }
+    },
+    "tailwindcss-language-server": {
+      "settings": {
+        "includeLanguages": {
+          "svelte": "html"
+        },
+        "classFunctions": ["cn", "clsx", "cva", "tv"],
+        "experimental": {
+          "classRegex": [
+            "class=\"([^\"]*)\"",
+            "class='([^']*)'",
+            "class:\\s*([^\\s{]+)",
+            "\\{\\s*class:\\s*\"([^\"]*)\"",
+            "\\{\\s*class:\\s*'([^']*)'"
+          ]
+        }
       }
     }
-  }
+  },
+  "agent": {
+    "expand_terminal_card": false,
+    "expand_edit_card": false,
+    "enable_feedback": false,
+    "tool_permissions": {
+      "tools": {
+        "move_path": {
+          "default": "allow"
+        },
+        "copy_path": {
+          "default": "allow"
+        },
+        "mcp:mcp-server-context7:query-docs": {
+          "default": "allow"
+        },
+        "mcp:mcp-server-context7:resolve-library-id": {
+          "default": "allow"
+        },
+        "write_file": {
+          "default": "allow"
+        },
+        "skill": {
+          "default": "allow"
+        },
+        "delete_path": {
+          "default": "allow"
+        },
+        "create_directory": {
+          "default": "allow"
+        },
+        "fetch": {
+          "default": "allow"
+        },
+        "mcp:mcp-server-github:search_code": {
+          "default": "allow"
+        },
+        "terminal": {
+          "default": "allow"
+        }
+      }
+    },
+    "sandbox_permissions": {
+      "allow_unsandboxed": true
+    },
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-opus-5.5",
+      "enable_thinking": true,
+      "effort": "high"
+    },
+    "favorite_models": [
+      {
+        "provider": "copilot_chat",
+        "model": "claude-opus-5.5",
+        "enable_thinking": true,
+        "effort": "high"
+      }
+    ],
+    "model_parameters": []
+  },
+  "edit_predictions": {
+    "allow_data_collection": "no",
+    "provider": "copilot"
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "outline_panel": {
+    "button": false
+  },
+  "status_bar": {
+    "cursor_position_button": true,
+    "active_language_button": true
+  },
+  "tabs": {
+    "git_status": false
+  },
+  "tab_bar": {
+    "show_tab_bar_buttons": false,
+    "show_nav_history_buttons": false,
+    "show": true
+  },
+  "title_bar": {
+    "show_menus": false,
+    "button_layout": "platform_default",
+    "show_onboarding_banner": false,
+    "show_project_items": true,
+    "show_worktree_name": true,
+    "show_branch_name": true,
+    "show_user_picture": false,
+    "show_sign_in": false
+  },
+  "ui_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "icon_theme": "Catppuccin Mocha",
+  "vim_mode": true,
+  "base_keymap": "VSCode",
+  "project_panel": {
+    "button": false
+  },
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "Catppuccin Mocha",
+  },
 }

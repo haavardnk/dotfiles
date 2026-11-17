@@ -5,8 +5,17 @@
 	required = true
 [user]
 	name = Håvard Kråkenes
-	email = hakr@equinor.com
+	email = 29313194+haavardnk@users.noreply.github.com
+	signingkey = /Users/HAKR/.ssh/git_ssh_signing_key_1.pub
 [core]
 	excludesfile = ~/.local_gitignore
 [credential]
 	helper = osxkeychain
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = /Users/HAKR/.ssh/allowed_signers
+[pull]
+	rebase = true
