@@ -6,7 +6,7 @@
 [user]
 	name = Håvard Kråkenes
 	email = 29313194+haavardnk@users.noreply.github.com
-	signingkey = /Users/HAKR/.ssh/git_ssh_signing_key_1.pub
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINs5xDlsV08R6yi0vNVJ8SwJj+waC7KnF2eZpPvVgRg8
 [core]
 	excludesfile = ~/.local_gitignore
 [credential]
@@ -17,5 +17,6 @@
 	gpgsign = true
 [gpg "ssh"]
 	allowedSignersFile = /Users/HAKR/.ssh/allowed_signers
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [pull]
 	rebase = true
