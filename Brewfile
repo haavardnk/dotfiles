@@ -1,5 +1,6 @@
 tap "cameroncooke/axe"
 tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
+tap "homebrew/cask"
 tap "microsoft/mssql-release"
 tap "nikitabobko/tap"
 tap "omnisharp/omnisharp-roslyn"
@@ -76,6 +77,10 @@ brew "zsh-history-substring-search"
 brew "zsh-syntax-highlighting"
 # CLI tool for interacting with iOS Simulators via accessibility and HID APIs
 brew "cameroncooke/axe/axe", trusted: true
+# Password manager that keeps all passwords secure behind one password
+cask "1password"
+# Application launcher and productivity software
+cask "alfred"
 # Enable Windows-like alt-tab
 cask "alt-tab"
 # Application uninstaller
@@ -84,6 +89,8 @@ cask "appcleaner"
 cask "bartender"
 # Brings the power of Copilot coding agent directly to your terminal
 cask "copilot-cli"
+# App to build and share containerised applications and microservices
+cask "docker-desktop"
 # Developer platform
 cask "dotnet-sdk"
 # Web browser
@@ -93,6 +100,8 @@ cask "flutter"
 cask "font-hack-nerd-font"
 cask "font-jetbrains-mono-nerd-font"
 cask "font-meslo-lg-nerd-font"
+# Desktop client for GitHub repositories
+cask "github"
 # Web browser
 cask "google-chrome"
 # Knowledge base that works on top of a local folder of plain text Markdown files
