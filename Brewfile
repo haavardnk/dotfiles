@@ -61,6 +61,8 @@ brew "python-tk@3.13"
 brew "ripgrep"
 # Extremely fast Python linter, written in Rust
 brew "ruff"
+# Rust toolchain installer
+brew "rustup"
 # Extremely fast Python type checker, written in Rust
 brew "ty"
 # Extremely fast Python package installer and resolver, written in Rust
