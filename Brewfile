@@ -47,6 +47,8 @@ brew "mole"
 brew "neovim"
 # Execute binaries from Python packages in isolated environments
 brew "pipx"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
 # Theme for zsh
 brew "powerlevel10k"
 # Terminal slideshow tool
